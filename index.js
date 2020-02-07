@@ -103,7 +103,7 @@ draw = (messages) => {
     const flowerLength = (document.getElementById("flowers").offsetHeight)
     var data = []
     for (var i = 0; i < 12; i++) {
-        data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 200, flowerR, flowerLength))
+        data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 220, flowerR, flowerLength))
     }
 
     drawMessage(["Happy Valentine's Day! Click the flower buds.", "❤️ Dan"], 36)
