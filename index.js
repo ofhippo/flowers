@@ -3,7 +3,7 @@ bud = (i, x, y, r) => {
     const startY = y
     const startR = r
     var pedals = []
-    while (r >= 0) {
+    while (r > 0) {
         pedals.push({i, x, y, r, color: 'red', border: "black"})
         r -= Math.random() * (startR / 10)
         if (Math.random() > 0.7) {
@@ -11,7 +11,7 @@ bud = (i, x, y, r) => {
         } else {
             x = startX
         }
-        if (Math.random() > 0.7) {
+        if (Math.random() > 0.5) {
             y += r / 10
         } else {
             y = startY
@@ -71,8 +71,24 @@ flower = (i, x, y, r, length) => {
     return stem(x, y, length - 2 * r, r / 20).concat(bud(i, x, y, r)).concat(leaves(x,y,r, length - 2 * r))
 }
 
-message = (i, messages) => {
-    alert(messages[i])
+drawMessage = (message, textSize) => {
+    var el = document.querySelector("#flowers svg text")
+    while (el) {
+        el.remove()
+        el = document.querySelector("#flowers svg text")
+    }
+    if (!Array.isArray(message)) {
+        message = [message]
+    }
+    message.forEach((msg, index) => {
+        d3.select("#flowers svg").append("text")
+            .attr("x", document.getElementById("flowers").offsetWidth / 2)             
+            .attr("y", 1.2 * (1 + index) * textSize)
+            .attr("text-anchor", "middle")  
+            .style("font-size", textSize)
+            .style("fill", "red")
+            .text(msg)
+    })
 }
 
 draw = (messages) => {
@@ -90,21 +106,7 @@ draw = (messages) => {
         data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 200, flowerR, flowerLength))
     }
 
-    svg.append("text")
-        .attr("x", document.getElementById("flowers").offsetWidth / 2)             
-        .attr("y", flowerR)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "36px")
-        .style("fill", "red")
-        .text("Happy Valentine's Day! Click the flower buds.");
-
-    svg.append("text")
-        .attr("x", document.getElementById("flowers").offsetWidth / 2)             
-        .attr("y", flowerR + 40)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "36px")
-        .style("fill", "red")
-        .text("❤️ Dan");
+    drawMessage(["Happy Valentine's Day! Click the flower buds.", "❤️ Dan"], 36)
 
     svg.selectAll('circle')
     .data(data)
@@ -123,5 +125,5 @@ draw = (messages) => {
         return d.color;
     })
     .style("stroke", d => d.border)
-    .on("click", (d) => d.i !== undefined && message(d.i, messages))
+    .on("click", (d) => d.i !== undefined && drawMessage(messages[d.i], 25))
 }
