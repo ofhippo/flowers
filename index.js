@@ -83,9 +83,9 @@ drawMessage = (message, textSize) => {
     message.forEach((msg, index) => {
         d3.select("#flowers svg").append("text")
             .attr("x", document.getElementById("flowers").offsetWidth / 2)             
-            .attr("y", 1.2 * (1 + index) * textSize)
+            .attr("y", 1.2 * (1 + index) * textSize + "px")
             .attr("text-anchor", "middle")  
-            .style("font-size", textSize)
+            .style("font-size", textSize + "px")
             .style("fill", "red")
             .text(msg)
     })
