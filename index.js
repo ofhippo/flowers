@@ -1,10 +1,10 @@
-bud = (x, y, r) => {
+bud = (i, x, y, r) => {
     const startX = x
     const startY = y
     const startR = r
     var pedals = []
     while (r >= 0) {
-        pedals.push({x, y, r, color: 'red', border: "black"})
+        pedals.push({i, x, y, r, color: 'red', border: "black"})
         r -= Math.random() * (startR / 10)
         if (Math.random() > 0.7) {
             x += r / 10
@@ -67,11 +67,15 @@ leaves = (x, y, r, height) => {
     return leafs
 }
 
-flower = (x, y, r, length) => {
-    return stem(x, y, length - 2 * r, r / 20).concat(bud(x, y, r)).concat(leaves(x,y,r, length - 2 * r))
+flower = (i, x, y, r, length) => {
+    return stem(x, y, length - 2 * r, r / 20).concat(bud(i, x, y, r)).concat(leaves(x,y,r, length - 2 * r))
 }
 
-draw = () => {
+message = (i, messages) => {
+    alert(messages[i])
+}
+
+draw = (messages) => {
     var svg = d3.select("#flowers")
                 .append("svg")
                 .style("width", "100%")
@@ -83,9 +87,8 @@ draw = () => {
     const flowerLength = (document.getElementById("flowers").offsetHeight)
     var data = []
     for (var i = 0; i < 12; i++) {
-        data = data.concat(flower(flowerR + i * (2 * flowerR + 10) + 10, 200, flowerR, flowerLength))
+        data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 200, flowerR, flowerLength))
     }
-    console.log(data)
     svg.selectAll('circle')
     .data(data)
     .enter()
@@ -103,4 +106,5 @@ draw = () => {
         return d.color;
     })
     .style("stroke", d => d.border)
+    .on("click", (d) => d.i !== undefined && message(d.i, messages))
 }
