@@ -89,6 +89,23 @@ draw = (messages) => {
     for (var i = 0; i < 12; i++) {
         data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 200, flowerR, flowerLength))
     }
+
+    svg.append("text")
+        .attr("x", document.getElementById("flowers").offsetWidth / 2)             
+        .attr("y", flowerR)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "36px")
+        .style("fill", "red")
+        .text("Happy Valentine's Day! Click the flower buds.");
+
+    svg.append("text")
+        .attr("x", document.getElementById("flowers").offsetWidth / 2)             
+        .attr("y", flowerR + 40)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "36px")
+        .style("fill", "red")
+        .text("❤️ Dan");
+
     svg.selectAll('circle')
     .data(data)
     .enter()
