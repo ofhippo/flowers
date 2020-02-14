@@ -3,8 +3,9 @@ bud = (i, x, y, r) => {
     const startY = y
     const startR = r
     var pedals = []
+    const color = "hsl(0, 100%, " + Math.floor(45 + 55 * Math.random()) + "%)"
     while (r > 0) {
-        pedals.push({i, x, y, r, color: 'red', border: "black"})
+        pedals.push({i, x, y, r, color, border: "black"})
         r -= Math.random() * (startR / 10)
         if (Math.random() > 0.7) {
             x += r / 10
