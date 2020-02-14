@@ -2,10 +2,10 @@ bud = (i, x, y, r) => {
     const startX = x
     const startY = y
     const startR = r
-    var pedals = []
+    var petals = []
     const color = "hsl(0, 100%, " + Math.floor(45 + 55 * Math.random()) + "%)"
     while (r > 0) {
-        pedals.push({i, x, y, r, color, border: "black"})
+        petals.push({i, x, y, r, color, border: "black"})
         r -= Math.random() * (startR / 10)
         if (Math.random() > 0.7) {
             x += r / 10
@@ -19,7 +19,7 @@ bud = (i, x, y, r) => {
         }
     }
 
-    return pedals
+    return petals
 }
 
 stem = (svg, x, y, length, r) => {
@@ -109,7 +109,7 @@ draw = (messages) => {
         data = data.concat(flower(svg, i, flowerR + i * (2 * flowerR + 10) + 10, 220, flowerR, flowerLength))
     }
 
-    drawMessage(["Happy Valentine's Day! Click the flower buds.", "❤️ Dan"], 36)
+    drawMessage(["Happy Valentine's Day! Click the flowers.", "❤️ Dan"], 36)
 
     svg.selectAll('circle')
     .data(data)
