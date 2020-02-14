@@ -21,12 +21,13 @@ bud = (i, x, y, r) => {
     return pedals
 }
 
-stem = (x, y, length, r) => {
-    var stemPieces = []
-    for (var i = 0; i < length; i++) {
-        stemPieces.push({x, y: y + i, r, color: 'green', border: 'green'})
-    }
-    return stemPieces
+stem = (svg, x, y, length, r) => {
+    svg.append("rect")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("width", r*2)
+        .attr("height", length)
+        .attr("fill", "green")
 }
 
 leaf = (x, y, r, direction) => {
@@ -67,8 +68,9 @@ leaves = (x, y, r, height) => {
     return leafs
 }
 
-flower = (i, x, y, r, length) => {
-    return stem(x, y, length - 2 * r, r / 20).concat(bud(i, x, y, r)).concat(leaves(x,y,r, length - 2 * r))
+flower = (svg, i, x, y, r, length) => {
+    stem(svg, x, y, length - 2 * r, r / 20)
+    return bud(i, x, y, r).concat(leaves(x,y,r, length - 2 * r))
 }
 
 drawMessage = (message, textSize) => {
@@ -103,7 +105,7 @@ draw = (messages) => {
     const flowerLength = (document.getElementById("flowers").offsetHeight)
     var data = []
     for (var i = 0; i < 12; i++) {
-        data = data.concat(flower(i, flowerR + i * (2 * flowerR + 10) + 10, 220, flowerR, flowerLength))
+        data = data.concat(flower(svg, i, flowerR + i * (2 * flowerR + 10) + 10, 220, flowerR, flowerLength))
     }
 
     drawMessage(["Happy Valentine's Day! Click the flower buds.", "❤️ Dan"], 36)
